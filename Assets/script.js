@@ -38,6 +38,8 @@ var getData = function (locationInput) {
 
 var displayTodayData = function (data, locationInput) {
 
+    todayStats.empty();
+
     var headerToday = $('<h1>');
     headerToday.text(locationInput + " (" + dayjs.unix(data.list[0].dt).format("M/D/YYYY") + ")");
     todayStats.append(headerToday);
@@ -56,6 +58,8 @@ var displayTodayData = function (data, locationInput) {
 }
 
 var displayForecast = function (data) {
+
+    forecast.empty();
 
     for (let index = 7; index < 40; index = index +8) {
         
