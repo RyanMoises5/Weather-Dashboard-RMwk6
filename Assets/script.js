@@ -33,6 +33,7 @@ var getData = function (locationInput) {
             }
 
         })
+
 };
 
 var displayTodayData = function (data, locationInput) {
@@ -56,9 +57,12 @@ var displayTodayData = function (data, locationInput) {
 
 var displayForecast = function (data) {
 
-    for (let index = 8; index <= 40; index = index + 8) {
+    for (let index = 7; index < 40; index = index +8) {
         
         var forecastCard = $('<div>');
+
+        var iconForecast = $('<img>');
+        iconForecast.attr('src', "https://openweathermap.org/img/wn/" + (data.list[index].weather[0].icon) + "@2x.png");
 
         var headerForecast = $('<h3>');
         headerForecast.text(dayjs.unix(data.list[index].dt).format("M/D/YYYY"));
@@ -73,6 +77,7 @@ var displayForecast = function (data) {
         humidForecast.text("Humidity: " + data.list[index].main.humidity + "%");
 
         forecastCard.append(headerForecast);
+        forecastCard.append(iconForecast);
         forecastCard.append(tempForecast);
         forecastCard.append(windForecast);
         forecastCard.append(humidForecast);
