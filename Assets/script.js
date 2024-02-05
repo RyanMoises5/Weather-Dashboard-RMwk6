@@ -81,6 +81,7 @@ var displayForecast = function (data) {
         forecastCard.append(tempForecast);
         forecastCard.append(windForecast);
         forecastCard.append(humidForecast);
+        forecastCard.addClass("bg-secondary p-1 m-1")
 
         forecast.append(forecastCard);
     }
