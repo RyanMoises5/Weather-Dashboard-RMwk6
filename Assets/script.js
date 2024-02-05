@@ -1,7 +1,42 @@
 var locationEl = $('#location');
 var submitBtn = $("#search-button");
+var clearBtn = $('#clear-button');
 var todayStats = $("#today");
 var forecast = $("#5day-forecast");
+var prevSearch = $('#prev-search');
+
+var items = [];
+
+function init() { 
+    var saveData = JSON.parse(localStorage.getItem("itemList"));
+
+    if (saveData !== null) {
+        items = saveData;
+    }
+
+    renderLocations();
+}
+
+init(); 
+
+function renderLocations () {
+    for (let index = 0; index < items.length; index++) {;
+        var itemName = items[index];
+
+        var searchElement = $('<button>');
+        searchElement.text(itemName);
+        searchElement.addClass("m-1");
+        prevSearch.append(searchElement);
+    }
+}
+
+var saveLocation = function (locationInput) {
+    items.push(locationInput);
+    
+    localStorage.setItem("itemList", JSON.stringify(items));
+    prevSearch.empty();
+    renderLocations();
+}
 
 var formSubmission = function (event) {
     event.preventDefault();
@@ -10,6 +45,7 @@ var formSubmission = function (event) {
 
     if (locationInput) {
         getData(locationInput);
+        saveLocation(locationInput);
     } else {
         alert('Please enter a location');
     }
@@ -31,9 +67,7 @@ var getData = function (locationInput) {
             } else {
                 alert ('Error: City ' + response.statusText);
             }
-
         })
-
 };
 
 var displayTodayData = function (data, locationInput) {
@@ -85,10 +119,17 @@ var displayForecast = function (data) {
         forecastCard.append(tempForecast);
         forecastCard.append(windForecast);
         forecastCard.append(humidForecast);
-        forecastCard.addClass("bg-secondary p-1 m-1")
+        forecastCard.addClass("fs-6 bg-secondary p-1 m-1")
 
         forecast.append(forecastCard);
     }
 }
 
 submitBtn.on("click", formSubmission);
+clearBtn.on("click", function() {
+
+    items = [];
+    localStorage.setItem("itemList", JSON.stringify(items));
+
+});
+
