@@ -83,6 +83,10 @@ var displayTodayData = function (data, locationInput) {
     latLon.text("Lat: " + data.city.coord.lat + ", Lon:" + data.city.coord.lon);
     todayStats.append(latLon);
     
+    var iconToday = $('<img>');
+    iconToday.attr('src', "https://openweathermap.org/img/wn/" + (data.list[0].weather[0].icon) + "@2x.png");
+    todayStats.append(iconToday);
+
     var tempToday = $('<p>');
     tempToday.text("Temp: " + data.list[0].main.temp + "°F");
     todayStats.append(tempToday);
@@ -105,9 +109,9 @@ var displayForecast = function (data) {
         var forecastCard = $('<div>');
 
         var iconForecast = $('<img>');
-        iconForecast.attr('src', "https://openweathermap.org/img/wn/" + (data.list[index].weather[0].icon) + "@2x.png");
+        iconForecast.attr('src', "https://openweathermap.org/img/wn/" + (data.list[index].weather[0].icon) + ".png");
 
-        var headerForecast = $('<h3>');
+        var headerForecast = $('<h4>');
         headerForecast.text(dayjs.unix(data.list[index].dt).format("M/D/YYYY"));
         
         var tempForecast = $('<p>');
@@ -124,7 +128,7 @@ var displayForecast = function (data) {
         forecastCard.append(tempForecast);
         forecastCard.append(windForecast);
         forecastCard.append(humidForecast);
-        forecastCard.addClass("fs-6 bg-secondary p-1 m-1")
+        forecastCard.addClass("fs-6 bg-secondary p-1 m-1");
 
         forecast.append(forecastCard);
     }
