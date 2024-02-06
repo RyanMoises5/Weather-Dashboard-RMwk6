@@ -25,7 +25,7 @@ function renderLocations () {
 
         var searchElement = $('<button>');
         searchElement.text(itemName);
-        searchElement.addClass("m-1");
+        searchElement.addClass("m-2 prev-search");
         prevSearch.append(searchElement);
     }
 }
@@ -34,6 +34,7 @@ var saveLocation = function (locationInput) {
     items.push(locationInput);
     
     localStorage.setItem("itemList", JSON.stringify(items));
+    
     prevSearch.empty();
     renderLocations();
 }
@@ -77,6 +78,10 @@ var displayTodayData = function (data, locationInput) {
     var headerToday = $('<h1>');
     headerToday.text(locationInput + " (" + dayjs.unix(data.list[0].dt).format("M/D/YYYY") + ")");
     todayStats.append(headerToday);
+    
+    var latLon = $('<p>');
+    latLon.text("Lat: " + data.city.coord.lat + ", Lon:" + data.city.coord.lon);
+    todayStats.append(latLon);
     
     var tempToday = $('<p>');
     tempToday.text("Temp: " + data.list[0].main.temp + "°F");
@@ -126,6 +131,7 @@ var displayForecast = function (data) {
 }
 
 submitBtn.on("click", formSubmission);
+
 clearBtn.on("click", function() {
 
     items = [];
@@ -133,3 +139,9 @@ clearBtn.on("click", function() {
 
 });
 
+prevSearch.on("click", '.prev-search', function (event) {
+    
+    var locationInput = $(event.target).text();
+
+    getData(locationInput);
+})
